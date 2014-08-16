@@ -129,9 +129,51 @@ nlFlatten (List (x:xs)) = nlFlatten x ++ nlFlatten (List xs)
 {- Here each type of potential input is handled: If just an element, the 
 value from the element is put into a list. If a List, we return an empty 
 list if the list is empty, otherwise we handle the first element in the 
-list and concat this with a recursive call to flatten the rest of the list.
+list and concat this with a recursive call to flatten the rest of 
+the list.
 
-To contrast this definition with flatten, NestedList could be an arbitrarily deep nesting at any point in the list, whereas flatten can only handle the strict list of lists.
+To contrast this definition with flatten, NestedList could be an 
+arbitrarily deep nesting at any point in the list, whereas flatten 
+can only handle the strict list of lists.
 
-Part of the power of defining it this way is that it is concise, but not at the expense of generality.
+Part of the power of defining it this way is that it is concise, 
+but not at the expense of generality.
+-}
+
+-- 8. Eliminate consecutive duplicates of list elements
+compress :: (Eq a) => [a] -> [a]
+compress [] = []
+compress [x] = [x]
+compress (x:xs) = if x == head xs then compress xs
+				  else x : compress xs
+{- Here, if the head of the tail is the same as the current head, 
+then we can ignore the element and recursively compress the tail.
+When the head is not equal to the head of the tail, then we use 
+cons to add it to the list.
+-}
+
+compress2 :: (Eq a) => [a] -> [a]
+compress2 [] = []
+compress2 [x] = [x]
+compress2 (x:xs) | x == head xs = compress xs
+				 | x /= head xs = x : compress xs
+{- Here, pattern matching is used as an equivalent of the if then else -}
+
+-- 9. Pack consecutive duplicates of list elements into sublists. If a list contains repeated elements they should be placed in separate sublists.
+
+pack :: (Eq a) => [a] -> [[a]]
+pack [] = []
+pack [x] = [[x]]
+pack (x:xs) = (x : takeWhile (==x) xs) : pack (dropWhile (==x) xs)
+{- This one again works with the (x:y:z:[]) style of building the 
+sublists. We take all the matching xs from the front of xs to make 
+an element for the result. This element is a list of the repeats, 
+which I found out can also be acquired as part of a tuple with the 
+span function of Data.List. Then, the remaining elements in the 
+list can be recursively processed to group the remaining occurrences.
+
+This is the third or forth time I've seen (element) used as a way 
+to indicate enclosing an element. I played with adding and removing 
+() to deal with function evaluation, and the solution showed me 
+that I had some extra.
 -}
