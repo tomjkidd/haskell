@@ -115,6 +115,23 @@ of elements) is matched, recursion stops. -}
 flatten :: [[a]] -> [a]
 flatten (xs : []) = xs
 flatten ((xs):(ys)) = xs ++ flatten ys
-{- The site mentioned that a data type would need to be introduce, so 
+{- The site mentioned that a data type would need to be introduced, so 
 I thought to first simplify the problem and make the input a list of 
 lists instead of a list of items and/or other lists. -}
+
+data NestedList a = Elem a | List [NestedList a]
+{- Here a algebraic data type NestedList is defined. It can either be an element,
+Elem, or a list of other NestedElements. -}
+nlFlatten :: NestedList a -> [a]
+nlFlatten (Elem a) = [a]
+nlFlatten (List []) = []
+nlFlatten (List (x:xs)) = nlFlatten x ++ nlFlatten (List xs)
+{- Here each type of potential input is handled: If just an element, the 
+value from the element is put into a list. If a List, we return an empty 
+list if the list is empty, otherwise we handle the first element in the 
+list and concat this with a recursive call to flatten the rest of the list.
+
+To contrast this definition with flatten, NestedList could be an arbitrarily deep nesting at any point in the list, whereas flatten can only handle the strict list of lists.
+
+Part of the power of defining it this way is that it is concise, but not at the expense of generality.
+-}
