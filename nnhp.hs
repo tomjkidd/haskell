@@ -145,7 +145,7 @@ compress :: (Eq a) => [a] -> [a]
 compress [] = []
 compress [x] = [x]
 compress (x:xs) = if x == head xs then compress xs
-				  else x : compress xs
+                  else x : compress xs
 {- Here, if the head of the tail is the same as the current head, 
 then we can ignore the element and recursively compress the tail.
 When the head is not equal to the head of the tail, then we use 
@@ -156,14 +156,14 @@ compress2 :: (Eq a) => [a] -> [a]
 compress2 [] = []
 compress2 [x] = [x]
 compress2 (x:xs) | x == head xs = compress xs
-				 | x /= head xs = x : compress xs
+                 | x /= head xs = x : compress xs
 {- Here, pattern matching is used as an equivalent of the if then else -}
 
 -- 9. Pack consecutive duplicates of list elements into sublists. If a list contains repeated elements they should be placed in separate sublists.
 
 pack :: (Eq a) => [a] -> [[a]]
 pack [] = []
-pack [x] = [[x]]
+--pack [x] = [[x]] -- This line is unnecessary because of the pattern below!
 pack (x:xs) = (x : takeWhile (==x) xs) : pack (dropWhile (==x) xs)
 {- This one again works with the (x:y:z:[]) style of building the 
 sublists. We take all the matching xs from the front of xs to make 
@@ -177,3 +177,10 @@ to indicate enclosing an element. I played with adding and removing
 () to deal with function evaluation, and the solution showed me 
 that I had some extra.
 -}
+
+pack2 :: (Eq a) => [a] -> [[a]]
+pack2 [] = []
+pack2 (x:xs) = (x : taken) : pack (remaining)
+    where taken = takeWhile (==x) xs
+          remaining = dropWhile (==x) xs
+{- Here I just wanted to condense the expression and move the details into a where clause -}        
