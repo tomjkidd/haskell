@@ -209,7 +209,10 @@ data SingleOrMultiple a = Single a | Multiple Int a
 encodeModified :: (Eq a) => [a] -> [SingleOrMultiple a]
 encodeModified xs = map determineType (pack xs)
     where determineType ys = if length ys == 1 then Single (head ys) else Multiple (length ys) (head ys)
-{- This is not too different from encode, the only special things is that a data type was created to represent the Single and Multiple constructors. A determine function was then created to create a Single or Multiple based on if the length == 1.
+{- This is not too different from encode, the only special things is 
+that a data type was created to represent the Single and Multiple 
+constructors. A determine function was then created to create a Single 
+or Multiple based on if the length == 1.
 -}
 
 -- 12. Decode a run-length encoded list
@@ -221,9 +224,13 @@ decompressSingleOrMultiple (Multiple n a) = a: decompressSingleOrMultiple (Multi
 decodeModified :: [SingleOrMultiple a] -> [a]
 decodeModified [] = []
 decodeModified (x:xs) = decompressSingleOrMultiple x ++ decodeModified xs
-{- Here, the decompress function was created to define how to go from an a to a list of as based on if the element is a Single or Multiple. This result is then concatenated to the result of recursively doing this for the remaining elements.
+{- Here, the decompress function was created to define how to go from 
+an a to a list of as based on if the element is a Single or Multiple. 
+This result is then concatenated to the result of recursively doing 
+this for the remaining elements.
 
-Is there a function that can do something similar to what is needed in the standard list functions? Yes, replicate.
+Is there a function that can do something similar to what is needed in 
+the standard list functions? Yes, replicate.
 
 How can the solution change with replicate?
 -}
@@ -231,5 +238,36 @@ decodeMod2 :: [SingleOrMultiple a] -> [a]
 decodeMod2 [] = []
 decodeMod2 ((Single x):xs) = x : decodeMod2 xs
 decodeMod2 ((Multiple n x):xs) = (replicate n x) ++ decodeMod2 xs
-{- When the head element is a Single, cons can be used to add the element. When the head element is a Multiple, concat is used to add the elements. In both cases, the recursive definition will process the remaining elements.
+{- When the head element is a Single, cons can be used to add the 
+element. When the head element is a Multiple, concat is used to add the 
+elements. In both cases, the recursive definition will process the 
+remaining elements.
 -}
+
+-- 13. Run-length encoding of a list (direct solution)
+{- Implement the so-called run-length encoding data compression method 
+directly, ie don't explicitly create the sublists containing the 
+duplicates, as in problem 9, but only count them. As in P11, simplify 
+the result list by replacing the singleton lists (1 X) by X.
+-}
+
+encodeDirect :: Eq a => [a] -> [SingleOrMultiple a]
+encodeDirect [] = []
+encodeDirect (x:xs) | count == 1 = (Single x) : (encodeDirect xs)
+                    | otherwise = (Multiple count x) : (encodeDirect rest)
+                    where (spanned, rest) = span (==x) xs
+                          count = 1 + (length spanned)
+                          
+{- Here, the span function is used to separate the list into the part 
+that matches and the rest of the list. If the count is 1, then a Single 
+is added to the list, otherwise a Multiple is added to the list. The 
+rest of the list is processed recursively. -}
+
+-- 14. Duplicate the elements of a list
+dupli :: [a] -> [a]
+dupli [] = []
+dupli (x:xs) = x:x:dupli xs
+{- This result is easy to obtain immediately, using the (head:tail) 
+pattern, the current head is just used twice to create the next 
+elements in the list. Recursively applying dupli to the remaining 
+elements will duplicate every element in the list.-}
