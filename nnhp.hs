@@ -191,9 +191,45 @@ pack2 (x:xs) = (x : taken) : pack (remaining)
 -}
 
 encode :: (Eq a) => [a] -> [(Int, a)]
-encode [] = []
 encode xs = map (\x -> (length x, head x)) (pack xs) 
 {- When pack is used as the basis for the list of lists grouping each 
 value, a map over the pack result can build the desired tuple with the 
 length and head functions pretty easily.
+-}
+
+{- 11. Modified run-length encoding
+Modify the result of P10 in such a way that if an element has no 
+duplicates it is simply copied into the result list. Only elements with 
+duplicates are transferred as (N E) lists.
+-}
+
+data SingleOrMultiple a = Single a | Multiple Int a
+    deriving (Show)
+
+encodeModified :: (Eq a) => [a] -> [SingleOrMultiple a]
+encodeModified xs = map determineType (pack xs)
+    where determineType ys = if length ys == 1 then Single (head ys) else Multiple (length ys) (head ys)
+{- This is not too different from encode, the only special things is that a data type was created to represent the Single and Multiple constructors. A determine function was then created to create a Single or Multiple based on if the length == 1.
+-}
+
+-- 12. Decode a run-length encoded list
+decompressSingleOrMultiple :: SingleOrMultiple a -> [a]
+decompressSingleOrMultiple (Single a) = [a]
+decompressSingleOrMultiple (Multiple 0 a) = []
+decompressSingleOrMultiple (Multiple n a) = a: decompressSingleOrMultiple (Multiple (n-1) a)
+
+decodeModified :: [SingleOrMultiple a] -> [a]
+decodeModified [] = []
+decodeModified (x:xs) = decompressSingleOrMultiple x ++ decodeModified xs
+{- Here, the decompress function was created to define how to go from an a to a list of as based on if the element is a Single or Multiple. This result is then concatenated to the result of recursively doing this for the remaining elements.
+
+Is there a function that can do something similar to what is needed in the standard list functions? Yes, replicate.
+
+How can the solution change with replicate?
+-}
+decodeMod2 :: [SingleOrMultiple a] -> [a]
+decodeMod2 [] = []
+decodeMod2 ((Single x):xs) = x : decodeMod2 xs
+decodeMod2 ((Multiple n x):xs) = (replicate n x) ++ decodeMod2 xs
+{- When the head element is a Single, cons can be used to add the element. When the head element is a Multiple, concat is used to add the elements. In both cases, the recursive definition will process the remaining elements.
 -}
