@@ -176,6 +176,8 @@ This is the third or forth time I've seen (element) used as a way
 to indicate enclosing an element. I played with adding and removing 
 () to deal with function evaluation, and the solution showed me 
 that I had some extra.
+
+A function that does what pack does here is also part of Data.List as the group function.
 -}
 
 pack2 :: (Eq a) => [a] -> [[a]]
@@ -183,4 +185,15 @@ pack2 [] = []
 pack2 (x:xs) = (x : taken) : pack (remaining)
     where taken = takeWhile (==x) xs
           remaining = dropWhile (==x) xs
-{- Here I just wanted to condense the expression and move the details into a where clause -}        
+{- Here I just wanted to condense the expression and move the details into a where clause -}
+
+{- 10. Run-length encoding of a list. Use the result of problem P09 to implement the so-called run-length encoding data compression method. Consecutive duplicates of elements are encoded as lists (N E) where N is the number of duplicates of the element E
+-}
+
+encode :: (Eq a) => [a] -> [(Int, a)]
+encode [] = []
+encode xs = map (\x -> (length x, head x)) (pack xs) 
+{- When pack is used as the basis for the list of lists grouping each 
+value, a map over the pack result can build the desired tuple with the 
+length and head functions pretty easily.
+-}
