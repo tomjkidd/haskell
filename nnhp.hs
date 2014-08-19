@@ -271,3 +271,45 @@ dupli (x:xs) = x:x:dupli xs
 pattern, the current head is just used twice to create the next 
 elements in the list. Recursively applying dupli to the remaining 
 elements will duplicate every element in the list.-}
+
+dupli2 :: [a] -> [a]
+dupli2 [] = []
+dupli2 (x:xs) = (replicate 2 x) ++ dupli2 xs
+
+-- 15. Replicate the elements of a list a given number of times
+repli :: [a] -> Int -> [a]
+repli [] _ = []
+repli _ 0 = []
+repli (x:xs) n = (replicate n x) ++ repli xs n
+{- Here I used the previous result as a basis, which made it pretty 
+straight forward.
+-}
+
+repli2 :: [a] -> Int -> [a]
+repli2 [] _ = []
+repli2 _ 0 = []
+repli2 (x:xs) n = x : repli2 [x] (n-1) ++ repli2 xs n
+{- Here, I wanted to avoid using replicate. There are probably more 
+obvious ways to implement this...
+-}
+
+-- 16. Drop every N'th element from a list
+dropEvery :: [a] -> Int -> [a]
+dropEvery [] _ = []
+dropEvery xs n = front ++ dropEvery rest n
+    where front = if length (take n xs) == n  then init(take n xs) else take n xs
+          rest = drop n xs
+{- The first implementation I made incorrectly handled the case when 
+there are fewer elements remaining than the amount to drop. In that 
+case, all the remaining elements should be kept and added to the list.
+-}
+
+dropEvery2 :: [a] -> Int -> [a]
+dropEvery2 [] _ = []
+dropEvery2 xs n = front xs ++ dropEvery2 (rest xs) n
+    where hasEnough = length (take n xs) == n
+          front | hasEnough = init . (take n)
+                | otherwise = take n
+          rest = drop n
+{- Just wanted to use patterns instead of the if-then-else expression.
+-}
