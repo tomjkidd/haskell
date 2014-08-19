@@ -313,3 +313,19 @@ dropEvery2 xs n = front xs ++ dropEvery2 (rest xs) n
           rest = drop n
 {- Just wanted to use patterns instead of the if-then-else expression.
 -}
+
+-- 17. Split a list into two parts, the legth of the first part is given. Do not use any predefined predicates.
+{- When using take and drop, this is pretty trivial -}
+split :: [a] -> Int -> ([a],[a])
+split xs n = ((take n xs), (drop n xs))
+
+{- What about when you can't use the built in functions... I'll just build my own local ones for practice. -}
+split2 :: [a] -> Int -> ([a],[a])
+split2 [] _ = ([],[])
+split2 xs n = ((myTake n xs), (myDrop n xs))
+    where myTake 0 xs = []
+          myTake n (x:xs) = x : myTake (n-1) xs
+          myDrop _ [] = []
+          myDrop 0 (x:xs) = x : myDrop 0 xs 
+          myDrop n (x:xs) = myDrop (n-1) xs
+{- myTake will reach it's base case after the first n calls, building the front of the split. myDrop will ignore the list until after the first n calls, building the end of the split. -}
