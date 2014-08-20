@@ -58,11 +58,13 @@ tkSplitAt :: Int -> [a] -> ([a], [a])
 tkSplitAt n xs = (tkTake n xs, tkDrop n xs)
 
 tkTakeWhile :: (a -> Bool) -> [a] -> [a]
+tkTakeWhile _ [] = []
 tkTakeWhile f (x:xs) | stop = []
                      | otherwise = x : tkTakeWhile f xs
                 where stop = (not.f) x
                 
 tkDropWhile :: (a -> Bool) -> [a] -> [a]
+tkDropWhile _ [] = []
 tkDropWhile f (x:xs) | keepDropping = tkDropWhile f xs
                      | otherwise = x:xs
                 where keepDropping = f x
@@ -112,3 +114,32 @@ tkZipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
 tkZipWith _ [] _ = []
 tkZipWith _ _ [] = []
 tkZipWith f (x:xs) (y:ys) = (f x y) : tkZipWith f xs ys
+
+tkLines :: String -> [String]
+tkLines [] = []
+tkLines ls@(x:xs) = (line) : (tkLines rest)
+    where (line, restWithNewline) = tkBreak (\a -> a == '\n') ls
+          rest = drop 1 restWithNewline
+
+tkUnlines :: [String] -> String
+tkUnlines [] = []
+tkUnlines (l:ls) = l ++ "\n" ++ tkUnlines ls
+
+tkWords :: String -> [String]
+tkWords [] = []
+tkWords ws@(x:xs) = word : tkWords rest
+    where (word, restWithWhitespace) = tkBreak (\a -> tkIsWhitespace a) ws
+          rest = tkDropWhile tkIsWhitespace restWithWhitespace
+
+-- This is the most basic helper...
+tkIsWhitespace :: Char -> Bool
+tkIsWhitespace x = case x of
+                        '\r' -> True
+                        '\n' -> True
+                        '\t' -> True
+                        ' ' -> True
+                        _ -> False
+
+tkUnwords :: [String] -> String
+tkUnwords [x] = x
+tkUnwords (x:xs) = x ++ " " ++ tkUnwords xs
