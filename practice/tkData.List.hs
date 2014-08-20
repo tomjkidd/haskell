@@ -143,3 +143,7 @@ tkIsWhitespace x = case x of
 tkUnwords :: [String] -> String
 tkUnwords [x] = x
 tkUnwords (x:xs) = x ++ " " ++ tkUnwords xs
+
+tkMap :: (a -> b) -> [a] -> [b]
+tkMap _ [] = []
+tkMap f (x:xs) = f x : tkMap f xs
