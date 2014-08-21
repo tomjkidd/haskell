@@ -156,9 +156,9 @@ tkSum (x:xs) = x + tkSum xs
 A left fold starts at the beginning of a list (left-to-right)
 A right fold starts at the end of a list (right-to-left)
 -}
-myFoldl :: (a -> b -> a) -> a -> [b] -> a
-myFoldl f acc [] = acc
-myFoldl f acc (x:xs) = myFoldl f acc' xs
+tkFoldl :: (a -> b -> a) -> a -> [b] -> a
+tkFoldl f acc [] = acc
+tkFoldl f acc (x:xs) = tkFoldl f acc' xs
     where acc' = f acc x
 
 {- Helpful for reference to track how foldl works on simple input
@@ -170,10 +170,10 @@ myFoldl f acc (x:xs) = myFoldl f acc' xs
         == (((0+1)+2)+3)
 -}
 
-myFoldr :: (a -> b -> b) -> b -> [a] -> b
+tkFoldr :: (a -> b -> b) -> b -> [a] -> b
 {- a is the type of an element, b is the acc type -}
-myFoldr _ acc [] = acc
-myFoldr f acc (x:xs) = f x (myFoldr f acc xs)
+tkFoldr _ acc [] = acc
+tkFoldr f acc (x:xs) = f x (tkFoldr f acc xs)
 {- Helpful for reference to also track how foldr works
     foldr (+) 0 [1,2,3]
         == foldr (+) 0 (1:2:3:[])
