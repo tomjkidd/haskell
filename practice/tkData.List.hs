@@ -147,3 +147,58 @@ tkUnwords (x:xs) = x ++ " " ++ tkUnwords xs
 tkMap :: (a -> b) -> [a] -> [b]
 tkMap _ [] = []
 tkMap f (x:xs) = f x : tkMap f xs
+
+tkSum :: Num a => [a] -> a
+tkSum [] = 0
+tkSum (x:xs) = x + tkSum xs
+
+{- Note: Folds are named from where they start.
+A left fold starts at the beginning of a list (left-to-right)
+A right fold starts at the end of a list (right-to-left)
+-}
+myFoldl :: (a -> b -> a) -> a -> [b] -> a
+myFoldl f acc [] = acc
+myFoldl f acc (x:xs) = myFoldl f acc' xs
+    where acc' = f acc x
+
+{- Helpful for reference to track how foldl works on simple input
+    foldl (+) 0 [1,2,3]
+        == foldl (+) 0 (1:2:3:[])
+        == foldl (+) (0+1) (2:3:[])
+        == foldl (+) ((0+1)+2) (3:[])
+        == foldl (+) (((0+1)+2)+3) ([])
+        == (((0+1)+2)+3)
+-}
+
+myFoldr :: (a -> b -> b) -> b -> [a] -> b
+{- a is the type of an element, b is the acc type -}
+myFoldr _ acc [] = acc
+myFoldr f acc (x:xs) = f x (myFoldr f acc xs)
+{- Helpful for reference to also track how foldr works
+    foldr (+) 0 [1,2,3]
+        == foldr (+) 0 (1:2:3:[])
+        == 1+foldr (+) 0 (2:3:[])
+        == 1+(2+foldr (+) 0 (3:[]))
+        == 1+(2+(3+foldr (+) 0 ([])))
+        == (1+(2+(3+0)))
+-}
+
+{- 
+foldl uses the acc value immediately and combines it with the first 
+element to make a new acc value, with which a direct, contained 
+recursive call is made to process the rest of the list.
+
+foldr waits to use the acc value until the end, combining it with the 
+last element. It makes recursive calls deferring function application of 
+each until the end of the list is reached.
+
+foldr is equivalent to replacing the empty list with the acc value, and 
+replacing each cons (:) in the list with an application of the function f 
+provided.
+
+In the book, f is called step, and acc is called zero.
+
+foldl creates a thunk. There are space and time concerns for this, so 
+expect to see foldr used more often. Thunking is also called a space leak.
+foldl' does not build up thunks.
+-}
