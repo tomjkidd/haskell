@@ -211,12 +211,12 @@ tkLookup key ((k,v):xs) | key == k = Just v
                         | otherwise = tkLookup key xs
 
 tkLookupFoldr :: Eq a => a -> [(a,b)] -> Maybe b
-tkLookupFoldr key = snd.(foldr find (key, Nothing))
+tkLookupFoldr key = snd . (foldr find (key, Nothing))
     where find (k,v) (key', acc) | key' == k = (key', Just v)
                                  | otherwise = (key', acc)
 
 tkLookupFoldl :: Eq a => a -> [(a,b)] -> Maybe b
-tkLookupFoldl key xs = fst (foldl' find (Nothing, key) xs)
+tkLookupFoldl key = fst . (foldl' find (Nothing, key))
     where find (acc, key') (k,v) | key' == k = (Just v, key')
                                  | otherwise = (acc, key')
                                  
