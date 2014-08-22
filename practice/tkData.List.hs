@@ -1,3 +1,5 @@
+import Data.List (foldl')
+
 tkLength :: [a] -> Int
 tkLength [] = 0
 tkLength (x:xs) = 1 + tkLength xs
@@ -202,3 +204,22 @@ foldl creates a thunk. There are space and time concerns for this, so
 expect to see foldr used more often. Excessive thunking is also called a space leak.
 foldl' does not build up thunks.
 -}
+
+tkLookup :: Eq a => a -> [(a,b)] -> Maybe b
+tkLookup key [] = Nothing
+tkLookup key ((k,v):xs) | key == k = Just v
+                        | otherwise = tkLookup key xs
+
+tkLookupFoldr :: Eq a => a -> [(a,b)] -> Maybe b
+tkLookupFoldr key = snd.(foldr find (key, Nothing))
+    where find (k,v) (key', acc) | key' == k = (key', Just v)
+                                 | otherwise = (key', acc)
+
+tkLookupFoldl :: Eq a => a -> [(a,b)] -> Maybe b
+tkLookupFoldl key xs = fst (foldl' find (Nothing, key) xs)
+    where find (acc, key') (k,v) | key' == k = (Just v, key')
+                                 | otherwise = (acc, key')
+                                 
+tkReplicate :: Int -> a -> [a]
+tkReplicate 0 _ = []
+tkReplicate n x = x : tkReplicate (n-1) x
