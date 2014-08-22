@@ -1,0 +1,2 @@
+ghc -c <filename> -- compiles a module as .hi(interface file) and .o(object) files
+ghc -o simple Main.hs <dependency object file> -- creates an executable, called linking

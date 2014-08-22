@@ -199,6 +199,6 @@ provided.
 In the book, f is called step, and acc is called zero.
 
 foldl creates a thunk. There are space and time concerns for this, so 
-expect to see foldr used more often. Thunking is also called a space leak.
+expect to see foldr used more often. Excessive thunking is also called a space leak.
 foldl' does not build up thunks.
 -}
