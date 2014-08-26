@@ -314,12 +314,13 @@ dropEvery2 xs n = front xs ++ dropEvery2 (rest xs) n
 {- Just wanted to use patterns instead of the if-then-else expression.
 -}
 
--- 17. Split a list into two parts, the legth of the first part is given. Do not use any predefined predicates.
+-- 17. Split a list into two parts, the length of the first part is given. Do not use any predefined predicates.
 {- When using take and drop, this is pretty trivial -}
 split :: [a] -> Int -> ([a],[a])
 split xs n = ((take n xs), (drop n xs))
 
-{- What about when you can't use the built in functions... I'll just build my own local ones for practice. -}
+{- What about when you can't use the built in functions... I'll just 
+build my own local ones for practice. -}
 split2 :: [a] -> Int -> ([a],[a])
 split2 [] _ = ([],[])
 split2 xs n = ((myTake n xs), (myDrop n xs))
@@ -328,7 +329,9 @@ split2 xs n = ((myTake n xs), (myDrop n xs))
           myDrop _ [] = []
           myDrop 0 (x:xs) = x : myDrop 0 xs 
           myDrop n (x:xs) = myDrop (n-1) xs
-{- myTake will reach it's base case after the first n calls, building the front of the split. myDrop will ignore the list until after the first n calls, building the end of the split. -}
+{- myTake will reach it's base case after the first n calls, building 
+the front of the split. myDrop will ignore the list until after the 
+first n calls, building the end of the split. -}
 
 -- 18. Extract a slice from a list.
 
@@ -339,8 +342,12 @@ mySlice (x:xs) 1 n = x : mySlice xs 1 (n-1)
 mySlice (x:xs) m n = mySlice xs (m-1) n
 {-This was not protected at all for when m > n, so that aside, the 
 recursive definition is pretty straight forward. Getting the pattern 
-matching was the most sensitive part.    
+matching was the most sensitive part.
 -}
 
-
-
+mySlice2 :: [a] -> Int -> Int -> [a]
+mySlice2 _ 0 _ = error "start must be greater than 1"
+mySlice2 xs m n | m > n = error "start must be greater than end"
+                | otherwise = take (n-m +1) $ drop (m-1) xs
+{- An easy alternative is to drop elements until the start index and 
+then take elements until the end index -}
