@@ -329,3 +329,18 @@ split2 xs n = ((myTake n xs), (myDrop n xs))
           myDrop 0 (x:xs) = x : myDrop 0 xs 
           myDrop n (x:xs) = myDrop (n-1) xs
 {- myTake will reach it's base case after the first n calls, building the front of the split. myDrop will ignore the list until after the first n calls, building the end of the split. -}
+
+-- 18. Extract a slice from a list.
+
+mySlice :: [a] -> Int -> Int -> [a]
+mySlice [] _ _ = []
+mySlice _ _ 2 = []
+mySlice (x:xs) 1 n = x : mySlice xs 1 (n-1)
+mySlice (x:xs) m n = mySlice xs (m-1) n
+{-This was not protected at all for when m > n, so that aside, the 
+recursive definition is pretty straight forward. Getting the pattern 
+matching was the most sensitive part.    
+-}
+
+
+
