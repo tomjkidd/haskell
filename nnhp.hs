@@ -351,3 +351,18 @@ mySlice2 xs m n | m > n = error "start must be greater than end"
                 | otherwise = take (n-m +1) $ drop (m-1) xs
 {- An easy alternative is to drop elements until the start index and 
 then take elements until the end index -}
+
+-- 19. Rotate a list N places to the left
+myRotate :: [a] -> Int -> [a]
+myRotate xs n = (drop m xs) ++ (take m xs) 
+    where m | n >= 0 = mod n (length xs)
+            | n < 0  = mod ((length xs) + n) (length xs)
+{- Here, the mod operator is used to drop the front elements and add
+them to the rear. -}
+
+-- 20. Remove the K'th element from a list
+removeAt :: Int -> [a] -> [a]
+removeAt 1 (x:xs) = xs
+removeAt n y@(x:xs) | n >=0 = x : removeAt (n-1) xs
+                    | otherwise = y
+removeAt _ [] = []
