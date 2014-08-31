@@ -19,5 +19,6 @@ answer, errorTerm :: Term
 answer = (Div(Div (Con 1972) (Con 2)) (Con 23))
 errorTerm = (Div (Con 1) (Con 0))
 
--- eval answer -- ("eval(Con 1972) <= 1972\neval(Con 2) <= 2\neval(Div (Con 1972) (Con 2)) <= 986\neval(Con 23) <= 23\neval(Div (Div (Con 1972) (Con 2)) (Con 23)) <= 42\n",42)
--- eval errorTerm -- ("eval(Con 1) <= 1\neval(Con 0) <= 0\neval(Div (Con 1) (Con 0)) <= *** Exception: divide by zero
+main = do
+    putStrLn (show $ eval answer)
+    putStrLn (show $ eval errorTerm)

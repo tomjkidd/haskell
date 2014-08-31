@@ -1,3 +1,4 @@
+{- 2.6 Variation zero, revisited: The basic evaluator -}
 data Term = Con Int | Div Term Term
     deriving (Show)
 {- In general, a function of type a -> b is replaced by a function of 

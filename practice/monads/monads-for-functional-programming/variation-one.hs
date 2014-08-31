@@ -26,5 +26,6 @@ answer, errorTerm :: Term
 answer = (Div(Div (Con 1972) (Con 2)) (Con 23))
 errorTerm = (Div (Con 1) (Con 0))
 
--- eval answer -- Return 42
--- eval errorTerm -- Raise "divide by zero"
+main = do
+    putStrLn (show $ eval answer)
+    putStrLn (show $ eval errorTerm)

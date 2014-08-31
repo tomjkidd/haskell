@@ -1,3 +1,4 @@
+{- 2.7 Variation one, revisited: Exceptions -}
 data Term = Con Int | Div Term Term
     deriving (Show)
     

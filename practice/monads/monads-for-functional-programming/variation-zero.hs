@@ -12,5 +12,6 @@ answer, errorTerm :: Term
 answer = (Div(Div (Con 1972) (Con 2)) (Con 23))
 errorTerm = (Div (Con 1) (Con 0))
 
--- eval answer -- 42
--- eval errorTerm -- Throws an divide by zero exception (native haskell)
+main = do
+    putStrLn (show $ eval answer)
+    putStrLn (show $ eval errorTerm)
