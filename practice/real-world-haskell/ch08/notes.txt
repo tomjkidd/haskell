@@ -1,0 +1,28 @@
+Things I should be able to do:
+
+Prelude
+Data.List
+Data.ByteString
+Data.ByteString.Char8
+Data.ByteString.Lazy
+Data.ByteString.Lazy.Char8
+Text.Regex.Base.Context
+Text.Regex.Posix
+
+Read text input and parse lines of text
+Create, Delete files.
+Use regular expressions.
+
+Glob specs:
+* Matching a string agains a pattern starts at the beginning of the string, and finishes at the end.
+* Most literal characters match themselves.
+* The * (asterisk) character means "match anything"
+* The ? (question mark) matches any single character
+* A [ (open square bracket) character begins a character class, which is ended by a ]. It means "match any character in this class". A class can be negated by following the opening [ with a !, meaning "match any character not in this class"
+A character followed by a - (dash) followed by another character denotes a range: "match any characters within this set."
+Character classes can't be empty.
+
+Regular expressions
+=~ operator (borrowed from Perl)
+
+"sample" =~ "sam"::Bool -- True
