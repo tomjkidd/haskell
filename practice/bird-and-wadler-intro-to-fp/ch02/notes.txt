@@ -1,0 +1,17 @@
+precedence:
+function application
+exponentiation
+multiplication
+addition
+
+order of association:
+left to right in most cases
+exceptions are exponentiation and the function type operator (->)
+
+(+) :: num -> num -> num
+(x) :: num -> num -> num
+
+A bracketed operator is called a section.
+
+(+) x y = x + y
+(x) x y = x x y
