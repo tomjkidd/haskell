@@ -1,0 +1,83 @@
+Lists
+
+lists are also called sequences
+
+One restriction placed on lists is that each element in the list is of the same type.
+
+Lists are equal if they contain the same value in the same order.'
+
+[a..b] syntactic sugar for [a, a + 1, ... a + (b - 1), b]
+[a,b..c] allows a progression where the step is (b-a) and the limit is c.
+
+3.2 List comprehensions
+terminology
+expression:
+qualifier: boolean-valued expression or a generator.
+
+list comprehension syntax 
+[<expression> | <qualifier>; ... ; <qualifier>]
+
+generator syntax
+<variable> <- <list>
+(<variable>,<variable>) <- <listofpairs>
+(<variable>,<variable>,<variable>) <- <listoftriples>
+and so on...
+
+3.3 Operations on lists
+(++) Concatenation
+(++) :: [a] -> [a] -> [a]
+Takes two lists and combines them
+Concatenation is associative, and has the identity element []
+Similar to U, or set union.
+
+concat :: [[a]] -> [a]
+Takes a list of lists and turns it into a long list
+
+length :: [a] -> Int
+
+length (xs ++ ys) = (length xs) + (length ys)
+
+head([x] ++ xs) = x
+tail([x] ++ xs) = xs
+
+hd [] = tl = bottom
+
+hd :: [a] -> a
+tl :: [a] -> [a]
+Again, at this point for me, these are familiar definitions...
+
+init(xs++[x]) = xs
+last(xs++[x]) = x
+take and drop
+takewhile and dropwhile
+reverse
+zip
+
+list indexing
+(!)::[a] -> num -> a
+
+list-difference
+(--)
+(xs ++ ys) -- xs = ys
+
+3.4 Map and filter
+3.5 The fold operators
+here a monoid was introduced...
+foldr
+foldl
+
+3.5.1 Laws
+duality theorems: There are three of them...
+3.5.2 Fold over non-empty lists
+3.5.3 Scan
+Was not familiar with this. Would be useful to do the exercises.
+
+3.6 List patterns
+'cons' as (:), like in Haskell.
+(:) associates to the right
+
+x:xs = [x] ++ xs
+
+Every list can be expressed in terms of [] and (:) in exactly ONE way.
+This is what allows us to use it for pattern matching.
+
