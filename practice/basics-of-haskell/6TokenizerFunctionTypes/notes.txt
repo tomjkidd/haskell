@@ -1,0 +1,17 @@
+Categorizing Characters
+Change in mindset for problem solving is presented. For the tokenizer, an imperative programmer would create a loop for processing consecutive characters, an object-oriented programmer would create a tokenizer that consumes tokens as an iterator, and a functional programmer looks at tokenizer as a function that picks the first character(s) of the string, categorizes it, creates a token with it, and then tokenizes the rest of the string.
+
+
+A quick definition of Token is done to do a character at a time, telling the difference between digit and alpha characters.
+
+The import statement is introduced.
+
+Haskell's hoogle database is introduced.
+
+Currying is introduced
+Point-free notation is introduced
+
+Tokenizing Operators: Guards
+Guards are introduced to define how to tokenize operators.
+KEY: Guards are tested in order of appearance.
+error function is introduced
