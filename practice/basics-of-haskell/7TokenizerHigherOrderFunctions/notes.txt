@@ -1,0 +1,31 @@
+Higher Order Functions and Lambdas
+Tokenize is a mixture of two concerns:
+1. Traversing a data structure
+2. Performing an operation on each element
+
+Introduction to map and filter.
+
+Lambda functions are introduced.
+
+Tokenizing Identifiers
+
+let/in expressions introduced.
+KEY: let is not a statement. It is an expression.
+
+Mutual Recursion
+KEY: Mutual recursion is where multiple functions recurse into each 
+other.
+
+I had used takeWhile and dropWhile to implement the helper function 
+alnums, which feels simpler.
+TODO: Investigate time/space performance to see if there is a difference.
+Does span resolve it if there are differences?
+
+where construct introduced.
+
+Folding
+foldl and foldr are introduced.
+
+The tokenizer was taken from single character recognition to full token 
+recognition in identifiers and numbers. The span function made this 
+pretty easy.
