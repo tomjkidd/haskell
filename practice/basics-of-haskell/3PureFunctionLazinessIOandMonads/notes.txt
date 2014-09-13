@@ -1,0 +1,49 @@
+Pure Functions
+KEY: There are 2 things he says about functions being pure:
+1. A function returns exactly the same result every time it's called 
+with the same set of arguments. In other words a function has no 
+state, nor can it access any external state. Every time you call it, 
+it behaves like a newborn baby with blank memory and no knowledge of 
+the external world.
+
+2. A function has no side effects. Calling a function once is the 
+same as calling it twice and discarding the result of the first call. 
+In fact if you discard the result of any function call, Haskell will 
+spare itself the trouble and will never call the function.
+
+KEY: Execution of pure functions can be easily parallelized because 
+they have no side effects.
+
+Simple I/O
+KEY: main evaluates not to a simple value, but to an action.
+KEY: The runtime executes the action.
+KEY: Program itself has no side effects, but the action does.
+
+Laziness
+KEY: 'undefined' is a built in object that by definition can never be 
+evaluated.
+Laziness with undefined was used to show that results that aren't 
+needed aren't calculated.
+
+Sequencing
+Larger IO actions are built from smaller IO actions.
+When using pure functions and lazy evaluation, sequencing is 
+non-trivial.
+
+do notation introduced.
+A do block allows you to create an IO action sequence.
+
+str <- getLine creates an action that, when executed, will take input 
+from the user and will pass the input to the rest of the do block 
+under the name str when it is executed. This is called binding a name 
+to a value.
+
+The way actions are glued together is the essence of the monad.
+
+References
+TODO: Read the following...
+Simon Peyton Jones
+http://research.microsoft.com/en-us/um/people/simonpj/papers/marktoberdorf/mark.pdf
+
+Eugenio Moggi
+http://www.disi.unige.it/person/MoggiE/ftp/ic91.pdf

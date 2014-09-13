@@ -1,0 +1,56 @@
+Haskell Data Types
+KEY: Haskell data is immutable. Once you construct a data item, it 
+will forever stay the same.
+
+KEY: Calling a constructor is not the same as evaluating it!
+KEY: Every data item remembers the way it was constructed (which 
+constructor was used) and what values it was passed.
+
+eschew: to abstain or keep away from; shun; avoid;
+
+KEY: In Haskell, mutation is often replaced by construction. For 
+complicated data structures, creating a copy can be expensive if the 
+data structure is not appropriate. There are persistent data 
+structures that are used, where unnecessary copying is avoided. 
+
+TODO: Read about persistent data structures
+https://www.cs.cmu.edu/~sleator/papers/another-persistence.pdf
+http://www.cs.tau.ac.il/~haimk/papers/journal2.pdf
+
+Enumerated Data Types
+A simple (now familiar) definition from the Prelude
+data Bool = True | False
+
+KEY: Constructor names must start with capital letters.
+
+Enumerations were introduced to define Operator
+
+data Operator = Plus | Minus | Times | Div
+
+Lists and Recursion
+KEY: ByteString is a more efficient version of String, to be used in String heavy applications.
+
+Focus was drawn to lists as an abstract data type, not an 
+implementation of the data type such as singly linked or doubly.
+
+Creating a new list by prepending an element to an existing list as 
+"cons", from Lisp. The ability to construct a list and an empty list 
+are all you need to build out all lists.
+
+To define a generic List data type for ints...
+
+data List = Cons Int List | Empty
+
+Later this was expanded using a type parameter, where List is now a 
+type constructor (whereas the constructors on the right are called 
+data constructors).
+data List a = Cons a (List a) | Empty
+
+This was further reduced to
+data [a] = a : [a] | []
+
+KEY: Pattern matching on lists can be nested to pull more than the 
+head element off with the match.
+
+type keyword was covered, introducing type synonyms in the context of 
+String being a list of Char.

@@ -1,0 +1,21 @@
+Function application was covered in 1, whereas function definition was 
+the focus of this.
+
+KEY: Haskell is comprised of defining functions, data structures, and 
+types.
+
+syntax
+<function name> [function args] = <expression using args>
+KEY: function and variable names always start with a lowercase letter.
+
+KEY: Programs need to have one function called main, which is the entry 
+point.
+
+KEY: The equals sign in function definition means the left hand side is 
+equal to the right hand side.
+KEY: Equational reasoning can be used to prove correctness of programs.
+
+Here, tuples and pattern matching are described in ways that are to 
+this point clear to me.
+
+Underscore introduced, too.

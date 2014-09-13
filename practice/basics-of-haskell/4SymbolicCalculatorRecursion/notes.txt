@@ -1,0 +1,67 @@
+The goal is to develop a symbolic calculator
+
+TODO: Parsec is a library that handles parsing, after implementing 
+this calculator, try to use this library to compare effort.
+http://www.haskell.org/haskellwiki/Parsec
+
+The Design
+The calculator is a loop that:
+    1. Gets a line of text from the user
+    2. Calculates a result
+    3. Displays the result to the user
+The calculation is done in three steps:
+    1. Lexical analysis: The string is converted to tokens
+    2. Parsing: The tokens are used to build an expression tree
+    3. Evaluation: The expression tree is evaluated
+    
+Like mentioned in the notes for Chapter 2, design usually starts with 
+defining function and data types to help you solve the target problems.
+
+Designing with Types
+1. Lexical analyzer
+Again, the main idea is that a user gives you a string to evaluate, 
+and the first step is to take that string and break it up into tokens.
+
+Type signatures and list notation are introduced, no notes due to 
+familiarity...
+
+2. Parser
+The parser expects that the tokens have been extracted and will take 
+them and form an expression tree, where things like associativity and 
+precedence will be built into the structure of the tree.
+
+3. Evaluator
+The evaluator expects an expression tree and will process it into a 
+result.
+
+With the lexical analyzer, parser, and evaluator we are creating a 
+data pipeline to process each String request the user gives as a 
+Double result
+
+KEY: undefined is the bottom of the type hierarchy, which means it 
+can be implicitly converted to any type. undefined is often used to 
+stub out functionality.
+
+KEY: () is called unit, loosely corresponding to void in other 
+languages.
+
+Recursion
+Tail recursion optimization is mentioned.
+TODO: Read something about the subject
+http://www.cs.arizona.edu/~debray/Publications/retval_placement.pdf
+
+Recursion is used to describe how to make the main input loop.
+
+Conditional
+Here conditionals are introduced, as well as short-circuit behavior 
+of if/then/else, &&, ||
+
+Recap of design
+Functions for design
+tokenize :: String -> [Token]
+parse :: [Token] -> Expression
+evaluate :: Expression -> Double
+
+Data Types for design
+Token
+Expression

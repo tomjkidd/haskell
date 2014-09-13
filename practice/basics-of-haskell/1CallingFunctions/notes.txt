@@ -1,0 +1,16 @@
+This section introduced syntax for calling functions, which by this 
+point I am familiar with.
+
+Then went on to precedence wrt function application. 
+KEY: Function application has the highest precedence.
+a b * c d is equivalent to (a b) * (c d)
+
+TODO: Find the precedence documentation
+http://www.haskell.org/onlinereport/haskell2010/haskellch4.html#x10-820004.4.2
+
+Dollar and Dot Notation
+KEY: $ has the lowest precedence
+KEY: $ binds to the right
+
+KEY: . is function composition
+KEY: id is a function that just returns its argument
