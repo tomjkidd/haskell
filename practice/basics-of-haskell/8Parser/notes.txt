@@ -1,0 +1,54 @@
+3 Forms of Expressions considered
+
+1. An additive expression that starts with a Term followed by either plus or minus, followed by another expression.
+Term + Term - Term like x-5+y
+2. An assignment of the form Identifier equals Expression. An assignment is treated like an expression for simplicity.
+3. A lonely Term
+
+Terms are more tightly bound than expressions
+1. Factor * Factor / Factor like 2*x/2
+2. A Term could also be a lonely Factor
+
+Factor
+1. A Number, like 147
+2. An Identifier (variable name), like x11
+3. A unary plus or minus in front of a Factor, like -x or +12
+4. A parenthesized Expression, like (a + b/2)
+
+These facts can also be represtend like so...
+
+Expression <- Term [+-] Expression
+            | Identifier '=' Expression
+            | Term
+Term       <- Factor [*/] Term
+            | Factor
+Factor     <- Number
+            | Identifier
+            | [+-] Factor
+            | '(' Expression ')'
+            
+The Parse Tree
+Tree data structure is natural for these expressions.
+Leaf nodes are either variables or numbers. Expressions generate binary addition/subtraction nodes. Terms produce binary multiplication/division nodes. There are also nodes for unary plus or minus, and the assignment node.
+
+A Tree datatype was introduced to server as the Expression tree's 
+basis.
+
+"x1 = -15 / (2 + x2)"
+Good picture of tree for expression was provided...
+
+Top-Down Recursive Parsing
+Three parsing functions are provided (each corresponding to the grammar defined above):
+    expression
+    term
+    factor
+    
+Each function consumes a token and produces nodes of the parse tree
+
+State Without Mutation
+The state monad is mentioned, but ignored to show how to solve the problem without it.
+
+KEY: To handle state, we need to make the parsing functions not only take the token list as input, but also return the unconsumed part of the token list.
+
+TODO: Lookup lookahead parsers to see where the lookAhead and accept functions are coming from
+http://en.wikipedia.org/wiki/LALR_parser
