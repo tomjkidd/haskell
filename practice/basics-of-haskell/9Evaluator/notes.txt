@@ -1,0 +1,28 @@
+The Easy Evaluator
+The evaluate function is pretty simple compared to the parse functions, that is if you don't take into account the symbolic variables.
+
+When adding the symbols, state is needed, which is addressed through a symbol table.
+TODO: Read more about GHC and how the haskell language accomplishes these feats
+http://community.haskell.org/~simonmar/papers/aos.pdf
+
+Data.HashTable library is mentioned for performance if the Symbol Table was a bottleneck, but Data.Map was settled on to be used
+
+qualified import is introduced.
+M.empty to create an empty map
+M.fromList to create a map with a list of tuples
+M.insert to create a new entry
+M.findWithDefault to use if key does not have a value
+
+Concept of data hiding introduced
+
+The Maybe data type is introduced
+
+evaluate :: Tree -> SymTab -> (a, SymTab)
+lookUp :: String -> SymTab -> (Double, SymTab)
+addSymbol :: String -> Double -> SymTab -> ((), SymTab)
+
+Point made that piping through the state for all of this is NOT the end goal. Its just to show where the path leads, and that there is a better way through monads. Piping through the state is so that it is clear what the monad is doing 'under the hood'
+
+At this point, making the code modular is mentioned.
+
+The Expression Problem is introduced, left to next tutorial
