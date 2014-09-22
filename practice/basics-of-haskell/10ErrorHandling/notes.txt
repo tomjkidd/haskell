@@ -1,0 +1,14 @@
+KEY: Partial means that a function is not defined for all values of 
+possible arguments. Contrasted with total.
+
+KEY: One way to make a partial function into a total function is to change the return type.
+
+Maybe and Either are often used in this capacity.
+
+data Either a b = Left a | Right b
+This data type is parameterized by 2 types.
+Left encodes failure (usually as a String) while Right encodes success.
+
+bind and return functions introduced
+typeclass introduced
+Monad introduced
